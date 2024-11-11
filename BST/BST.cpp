@@ -81,13 +81,12 @@ void BST::deleteNodeRecursive(Node *&root, const int &deleteNum) {
     else if (deleteNum > root->val)
         deleteNodeRecursive(root->right, deleteNum);
     else { // root->val == deleteNum
-        if (!root->left) { // only has right subtree
+        if (!root->left && !root->right) {
+            delete root;
+            root = nullptr;
+        } else if (!root->left || !root->right) {
             tmp = root;
-            root = root->right;
-            delete tmp;
-        } else if (!root->right) { // only has left subtree
-            tmp = root;
-            root = root->left;
+            root = (root->right) ? root->left : root->right;
             delete tmp;
         } else {
             tmp = minValNode(root->right);
