@@ -1,2 +1,2 @@
 # simple-algorithm-implementation
-Getting serious
+Algorithms and datastructures
