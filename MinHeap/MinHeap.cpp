@@ -4,11 +4,12 @@
 
 using namespace std;
 
-MinHeap::MinHeap() : size{0}, capacity{1} {}
+MinHeap::MinHeap() : size{0}, capacity{1} {
+    heap.resize(1);
+}
 
 MinHeap::MinHeap(int cap) : size{0}, capacity{cap} {
-    if (cap == 0)
-        heap.resize(capacity);
+    heap.resize(capacity);
 }
 
 int MinHeap::count() const {
@@ -16,13 +17,13 @@ int MinHeap::count() const {
 }
 
 void MinHeap::insert(int n) {
-    ++size;
     if (size == capacity) {
         capacity += (size + 1) / 2;
         heap.resize(capacity);
     }
     heap[size] = n;
-    bubbleUp(size - 1);
+    bubbleUp(size);
+    ++size;
 }
 
 int MinHeap::removeMin() {
@@ -38,10 +39,9 @@ int MinHeap::removeMin() {
 void MinHeap::print() const {
     int level = 0;
     int numberOfElements = 1;
-    for (int i=0; i<size; ++i) {
+    for (int i = 0; i < size; ++i) {
         if (i == numberOfElements) {
-            numberOfElements += (1 << level); // pow(2, level)
-            ++level;
+            numberOfElements += (1 << ++level); // pow(2, level)
             cout << endl;
         }
         cout << heap[i] << " ";
